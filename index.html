@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Calculator (HTML, CSS)</title>
+  </head>
+  <body>
+    <div class="calculator">
+      <div class="screen" id="screen"></div>
+      <div class="row" id="row-1">
+        <button onclick="hammasiniOchir()" class="button button-1">AC</button>
+        <button onclick="hammasiniOchir()" class="button button-1">C</button>
+        <button onclick="birsiniOchir()" class="button button-1">←</button>
+        <button
+          value="/"
+          onclick="ekranaYaz(this.value)"
+          class="button button-3"
+        >
+          ÷
+        </button>
+      </div>
+      <div class="row" id="row-2">
+        <button
+          value="7"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          7
+        </button>
+        <button
+          value="8"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          8
+        </button>
+        <button
+          value="9"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          9
+        </button>
+        <button
+          value="*"
+          onclick="ekranaYaz(this.value)"
+          class="button button-3"
+        >
+          ×
+        </button>
+      </div>
+      <div class="row" id="row-3">
+        <button
+          value="4"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          4
+        </button>
+        <button
+          value="5"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          5
+        </button>
+        <button
+          value="6"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          6
+        </button>
+        <button
+          value="-"
+          onclick="ekranaYaz(this.value)"
+          class="button button-3"
+        >
+          -
+        </button>
+      </div>
+      <div class="row" id="row-4">
+        <button
+          value="1"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          1
+        </button>
+        <button
+          value="2"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          2
+        </button>
+        <button
+          value="3"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          3
+        </button>
+        <button
+          value="+"
+          onclick="ekranaYaz(this.value)"
+          class="button button-3"
+        >
+          +
+        </button>
+      </div>
+      <div class="row" id="row-5">
+        <button
+          value="."
+          onclick="ekranaYaz(this.value)"
+          class="button button-3"
+        >
+          .
+        </button>
+        <button
+          value="0"
+          onclick="ekranaYaz(this.value)"
+          class="button button-2"
+        >
+          0
+        </button>
+        <button onclick="hisobla()" value="=" class="button button-4">=</button>
+      </div>
+    </div>
+    <script>
+      let nuqtaIshlatildi = 0;
+
+      function ekranaYaz(pressedVal) {
+        let ekran = document.getElementById("screen").innerHTML;
+        if (
+          pressedVal !== "+" &&
+          pressedVal !== "-" &&
+          pressedVal !== "*" &&
+          pressedVal !== "/" &&
+          pressedVal !== "."
+        ) {
+          document.getElementById("screen").innerHTML = ekran + pressedVal;
+        } else {
+          if (ekran !== "") {
+            if (pressedVal !== ".") {
+              nuqtaIshlatildi = 0;
+              let ohirgi = ekran[ekran.length - 1];
+              if (
+                ohirgi !== "+" &&
+                ohirgi !== "-" &&
+                ohirgi !== "*" &&
+                ohirgi !== "/" &&
+                ohirgi !== "."
+              ) {
+                document.getElementById("screen").innerHTML =
+                  ekran + pressedVal;
+              } else {
+                document.getElementById("screen").innerHTML =
+                  ekran.slice(0, ekran.length - 1) + pressedVal;
+              }
+            } else if (pressedVal == "." && nuqtaIshlatildi == 0) {
+              let ohirgi = ekran[ekran.length - 1];
+              if (
+                ohirgi !== "/" &&
+                ohirgi !== "*" &&
+                ohirgi !== "+" &&
+                ohirgi !== "-"
+              ) {
+                document.getElementById("screen").innerHTML =
+                  ekran + pressedVal;
+                nuqtaIshlatildi = 1;
+              }
+            }
+          }
+        }
+      }
+      function hammasiniOchir() {
+        document.getElementById("screen").innerHTML = "";
+        nuqtaIshlatildi = 0;
+      }
+
+      function birsiniOchir() {
+        /*
+        tayyor metodsiz ishlatish
+       let ekran = document.getElementById("screen").innerHTML,
+          birniOchirilgan = "";
+        for (let i = 0; i < ekran.length - 1; i++) {
+          birniOchirilgan = birniOchirilgan + ekran[i];
+        }
+        */
+        // metod bilan yechim
+
+        let ekranQiymati = document.getElementById("screen").innerHTML;
+        let ohirgiQiymat = ekranQiymati[ekranQiymati.length - 1];
+        if (ohirgiQiymat !== ".") {
+          document.getElementById("screen").innerHTML = ekranQiymati.slice(
+            0,
+            ekranQiymati.length - 1
+          );
+        } else {
+          document.getElementById("screen").innerHTML = ekranQiymati.slice(
+            0,
+            ekranQiymati.length - 1
+          );
+          nuqtaIshlatildi = 0;
+        }
+      }
+
+      function hisobla() {
+        let ekran = document.getElementById("screen").innerHTML;
+        document.getElementById("screen").innerHTML = eval(ekran);
+      }
+      document.addEventListener("keydown", function (e) {
+        let pressed = e.key;
+        let calculatorKeys = [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          ".",
+          "*",
+          "/",
+          "-",
+          "+",
+        ];
+        let b = "Backspare";
+        let t = "=";
+        if (calculatorKeys.includes(pressed)) {
+          ekranaYaz(pressed);
+        }
+        if (pressed == "=") {
+          hisobla(pressed);
+        }
+        if (pressed == "Backspace") {
+          birsiniOchir(pressed);
+        }
+        if (pressed == "Delete") {
+          hammasiniOchir(pressed);
+        }
+        if (pressed == "Enter") {
+          let ekran = document.getElementById("screen").innerHTML;
+          if (ekran !== "") {
+            hisobla(pressed);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
